@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio - Nguyễn Hoàng Khang</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #0a0a0f;
+    --surface: #12121a;
+    --surface2: #1a1a28;
+    --accent: #7c6af7;
+    --accent2: #f7a26a;
+    --text: #f0efff;
+    --muted: #8887a8;
+    --border: rgba(124,106,247,0.18);
+    --grad: linear-gradient(135deg, #7c6af7 0%, #f7a26a 100%);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Be Vietnam Pro', sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* — noise overlay — */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 0; opacity: 0.5;
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    position: fixed; left: 0; top: 0; bottom: 0;
+    width: 260px;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    display: flex; flex-direction: column;
+    padding: 2.5rem 1.5rem;
+    z-index: 100;
+    animation: slideIn .6s ease both;
+  }
+
+  @keyframes slideIn { from { transform: translateX(-40px); opacity:0; } to { transform: none; opacity:1; } }
+
+  .avatar-wrap {
+    width: 88px; height: 88px;
+    border-radius: 50%;
+    background: var(--grad);
+    padding: 3px;
+    margin: 0 auto 1rem;
+    flex-shrink: 0;
+  }
+  .avatar-inner {
+    width: 100%; height: 100%;
+    border-radius: 50%;
+    background: var(--surface);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2rem;
+  }
+
+  .sidebar-name {
+    text-align: center;
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: .02em;
+    margin-bottom: .2rem;
+  }
+
+  .sidebar-role {
+    text-align: center;
+    font-size: .75rem;
+    color: var(--accent);
+    font-family: 'Space Mono', monospace;
+    margin-bottom: 1.8rem;
+    padding-bottom: 1.8rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-label {
+    font-size: .6rem;
+    text-transform: uppercase;
+    letter-spacing: .15em;
+    color: var(--muted);
+    margin-bottom: .5rem;
+  }
+
+  nav a {
+    display: flex; align-items: center; gap: .6rem;
+    padding: .5rem .75rem;
+    border-radius: 8px;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: .85rem;
+    font-weight: 500;
+    transition: all .2s;
+    margin-bottom: .15rem;
+  }
+  nav a:hover, nav a.active {
+    background: rgba(124,106,247,.12);
+    color: var(--accent);
+  }
+  nav a span.icon { font-size: 1rem; width: 18px; text-align: center; }
+
+  .sidebar-socials {
+    margin-top: auto;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    display: flex; gap: .75rem; justify-content: center;
+  }
+  .social-btn {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: all .2s;
+    color: var(--muted);
+  }
+  .social-btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); transform: translateY(-2px); }
+
+  /* ── MAIN ── */
+  .main {
+    margin-left: 260px;
+    padding: 3rem 3.5rem;
+    max-width: 900px;
+    animation: fadeUp .7s .2s ease both;
+  }
+
+  @keyframes fadeUp { from { opacity:0; transform: translateY(24px); } to { opacity:1; transform: none; } }
+
+  /* ── HEADER ── */
+  header {
+    margin-bottom: 3.5rem;
+    position: relative;
+  }
+  .hi-tag {
+    display: inline-block;
+    font-family: 'Space Mono', monospace;
+    font-size: .72rem;
+    color: var(--accent);
+    background: rgba(124,106,247,.1);
+    border: 1px solid rgba(124,106,247,.25);
+    padding: .25rem .75rem;
+    border-radius: 100px;
+    margin-bottom: 1rem;
+  }
+  h1 {
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 800;
+    line-height: 1.15;
+    margin-bottom: .75rem;
+  }
+  h1 .grad { background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+  .tagline {
+    color: var(--muted);
+    font-size: .95rem;
+    max-width: 540px;
+    margin-bottom: 1.5rem;
+  }
+
+  .cta-row { display: flex; gap: .75rem; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: .4rem;
+    padding: .6rem 1.3rem;
+    border-radius: 8px;
+    font-size: .85rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all .2s;
+  }
+  .btn-primary { background: var(--grad); color: #fff; }
+  .btn-primary:hover { opacity: .88; transform: translateY(-1px); }
+  .btn-ghost { background: transparent; color: var(--text); border: 1px solid var(--border); }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ── SECTIONS ── */
+  section { margin-bottom: 3.5rem; scroll-margin-top: 2rem; }
+
+  .sec-title {
+    font-size: .65rem;
+    text-transform: uppercase;
+    letter-spacing: .18em;
+    color: var(--accent);
+    font-family: 'Space Mono', monospace;
+    margin-bottom: 1.25rem;
+    display: flex; align-items: center; gap: .75rem;
+  }
+  .sec-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  h2 { font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem; }
+
+  /* ── CONTACT CARDS ── */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+  }
+  .contact-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    display: flex; align-items: center; gap: .75rem;
+    text-decoration: none;
+    color: var(--text);
+    transition: all .22s;
+  }
+  .contact-card:hover { border-color: var(--accent); transform: translateY(-2px); background: var(--surface2); }
+  .contact-icon { font-size: 1.3rem; }
+  .contact-label { font-size: .7rem; color: var(--muted); }
+  .contact-val { font-size: .82rem; font-weight: 600; word-break: break-all; }
+
+  /* ── SKILLS ── */
+  .skill-groups { display: flex; flex-direction: column; gap: 1rem; }
+  .skill-group {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+  }
+  .skill-group-name { font-size: .75rem; color: var(--accent); font-weight: 600; margin-bottom: .6rem; }
+  .tags { display: flex; flex-wrap: wrap; gap: .4rem; }
+  .tag {
+    font-size: .72rem; font-weight: 500;
+    padding: .2rem .65rem;
+    border-radius: 100px;
+    background: rgba(124,106,247,.1);
+    border: 1px solid rgba(124,106,247,.2);
+    color: var(--text);
+  }
+  .tag.ai { background: rgba(247,162,106,.08); border-color: rgba(247,162,106,.25); }
+
+  /* ── PROJECTS ── */
+  .project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.25rem; }
+  .project-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.4rem;
+    transition: all .22s;
+    position: relative;
+    overflow: hidden;
+  }
+  .project-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: var(--grad);
+    opacity: 0;
+    transition: opacity .2s;
+  }
+  .project-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+  .project-card:hover::before { opacity: 1; }
+  .project-emoji { font-size: 1.8rem; margin-bottom: .75rem; }
+  .project-name { font-weight: 700; margin-bottom: .4rem; }
+  .project-desc { font-size: .8rem; color: var(--muted); line-height: 1.55; margin-bottom: .9rem; }
+  .project-tags { display: flex; gap: .35rem; flex-wrap: wrap; }
+  .ptag { font-size: .65rem; padding: .15rem .5rem; border-radius: 4px; background: var(--surface2); color: var(--muted); font-family: 'Space Mono', monospace; }
+
+  /* ── EDUCATION & ABOUT ── */
+  .about-text { color: var(--muted); font-size: .92rem; line-height: 1.8; max-width: 600px; }
+  .edu-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.2rem 1.4rem;
+    display: flex; gap: 1rem; align-items: flex-start;
+  }
+  .edu-icon { font-size: 1.8rem; flex-shrink: 0; }
+  .edu-school { font-weight: 700; margin-bottom: .2rem; }
+  .edu-major { font-size: .82rem; color: var(--accent); margin-bottom: .2rem; }
+  .edu-year { font-size: .75rem; color: var(--muted); font-family: 'Space Mono', monospace; }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding-top: 2rem;
+    color: var(--muted);
+    font-size: .78rem;
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: .5rem;
+  }
+  footer a { color: var(--accent); text-decoration: none; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 700px) {
+    .sidebar { position: static; width: 100%; padding: 1.5rem; flex-direction: row; flex-wrap: wrap; align-items: center; gap: 1rem; }
+    .sidebar-role { display: none; }
+    nav { display: flex; flex-wrap: wrap; gap: .3rem; }
+    .main { margin-left: 0; padding: 1.5rem; }
+    footer { flex-direction: column; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── SIDEBAR ── -->
+<aside class="sidebar">
+  <div class="avatar-wrap">
+    <div class="avatar-inner">🧑‍💻</div>
+  </div>
+  <div class="sidebar-name">Nguyễn Hoàng Khang</div>
+  <div class="sidebar-role">AI &amp; Web Developer</div>
+
+  <div class="nav-label">Menu</div>
+  <nav>
+    <a href="#about" class="active"><span class="icon">👤</span> About Us</a>
+    <a href="#cv"><span class="icon">📄</span> CV</a>
+    <a href="#projects"><span class="icon">🛒</span> My Product</a>
+    <a href="#contact"><span class="icon">✉️</span> Contact</a>
+  </nav>
+
+  <div class="sidebar-socials">
+    <a class="social-btn" href="https://github.com/yourusername" target="_blank" title="GitHub">🐙</a>
+    <a class="social-btn" href="https://facebook.com/yourprofile" target="_blank" title="Facebook">👥</a>
+    <a class="social-btn" href="mailto:youremail@gmail.com" title="Gmail">📧</a>
+  </div>
+</aside>
+
+<!-- ── MAIN ── -->
+<main class="main">
+
+  <!-- HEADER -->
+  <header id="top">
+    <div class="hi-tag">👋 Xin chào, tôi là</div>
+    <h1>Nguyễn Hoàng Khang<br><span class="grad">AI & Web Developer</span></h1>
+    <p class="tagline">Đam mê ứng dụng AI vào các sản phẩm thực tế. Đã xây dựng web bán đồ ăn và một số dự án cá nhân. Hiện đang học hỏi &amp; phát triển mỗi ngày.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="#projects">🚀 Xem dự án</a>
+      <a class="btn btn-ghost" href="#contact">📩 Liên hệ</a>
+    </div>
+  </header>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="sec-title">About Us</div>
+    <h2>Về tôi</h2>
+    <p class="about-text">
+      Tôi là một developer đang trong quá trình tự học và phát triển kỹ năng lập trình web. Tuy không phải "pro code" nhưng tôi có thế mạnh rõ ràng trong việc khai thác và ứng dụng AI vào các sản phẩm thực tế. Tôi thích xây dựng những thứ có giá trị sử dụng thật sự — từ website bán đồ ăn đến các công cụ nhỏ hỗ trợ cuộc sống hàng ngày. Luôn sẵn sàng học hỏi, thử nghiệm, và đưa ý tưởng thành sản phẩm.
+    </p>
+  </section>
+
+  <!-- CV / EDUCATION -->
+  <section id="cv">
+    <div class="sec-title">CV</div>
+    <h2>Học vấn &amp; Kỹ năng</h2>
+
+    <div class="edu-card" style="margin-bottom:1.5rem">
+      <div class="edu-icon">🎓</div>
+      <div>
+        <div class="edu-school">Trường Đại học / Cao đẳng của bạn</div>
+        <div class="edu-major">Ngành: Công nghệ thông tin / Kỹ thuật phần mềm</div>
+        <div class="edu-year">2021 – 2025 · Đang theo học</div>
+      </div>
+    </div>
+
+    <div class="skill-groups">
+      <div class="skill-group">
+        <div class="skill-group-name">🌐 Web Development</div>
+        <div class="tags">
+          <span class="tag">HTML</span>
+          <span class="tag">CSS</span>
+          <span class="tag">JavaScript</span>
+          <span class="tag">React (cơ bản)</span>
+          <span class="tag">GitHub Pages</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-name">🤖 AI &amp; Tools (Thế mạnh)</div>
+        <div class="tags">
+          <span class="tag ai">ChatGPT / Claude</span>
+          <span class="tag ai">Prompt Engineering</span>
+          <span class="tag ai">AI-assisted coding</span>
+          <span class="tag ai">Automation với AI</span>
+          <span class="tag ai">n8n / Make (cơ bản)</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-name">🛠 Công cụ khác</div>
+        <div class="tags">
+          <span class="tag">Git &amp; GitHub</span>
+          <span class="tag">Figma (cơ bản)</span>
+          <span class="tag">VS Code</span>
+          <span class="tag">Vercel / GitHub Pages</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="sec-title">My Product</div>
+    <h2>Dự án của tôi</h2>
+    <div class="project-grid">
+
+      <div class="project-card">
+        <div class="project-emoji">🍔</div>
+        <div class="project-name">Web Bán Đồ Ăn</div>
+        <div class="project-desc">Website đặt món ăn online với giao diện thân thiện. Bao gồm menu, giỏ hàng, và thông tin liên hệ.</div>
+        <div class="project-tags">
+          <span class="ptag">HTML/CSS</span>
+          <span class="ptag">JavaScript</span>
+          <span class="ptag">GitHub Pages</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-emoji">🤖</div>
+        <div class="project-name">AI Chatbot / Tool</div>
+        <div class="project-desc">Ứng dụng AI hỗ trợ người dùng trả lời câu hỏi hoặc tự động hoá tác vụ nhờ tích hợp API.</div>
+        <div class="project-tags">
+          <span class="ptag">Claude API</span>
+          <span class="ptag">JavaScript</span>
+          <span class="ptag">AI</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-emoji">💼</div>
+        <div class="project-name">Portfolio Website</div>
+        <div class="project-desc">Trang cá nhân giới thiệu bản thân, kỹ năng và dự án. Deploy miễn phí trên GitHub Pages.</div>
+        <div class="project-tags">
+          <span class="ptag">HTML/CSS</span>
+          <span class="ptag">GitHub Pages</span>
+          <span class="ptag">Responsive</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="sec-title">Contact</div>
+    <h2>Liên hệ với tôi</h2>
+    <div class="contact-grid">
+      <a class="contact-card" href="tel:+84xxxxxxxxx">
+        <span class="contact-icon">📱</span>
+        <div>
+          <div class="contact-label">Điện thoại</div>
+          <div class="contact-val">+84 xxx xxx xxx</div>
+        </div>
+      </a>
+      <a class="contact-card" href="mailto:youremail@gmail.com">
+        <span class="contact-icon">📧</span>
+        <div>
+          <div class="contact-label">Gmail</div>
+          <div class="contact-val">youremail@gmail.com</div>
+        </div>
+      </a>
+      <a class="contact-card" href="https://facebook.com/yourprofile" target="_blank">
+        <span class="contact-icon">👥</span>
+        <div>
+          <div class="contact-label">Facebook</div>
+          <div class="contact-val">facebook.com/yourprofile</div>
+        </div>
+      </a>
+      <a class="contact-card" href="https://github.com/yourusername" target="_blank">
+        <span class="contact-icon">🐙</span>
+        <div>
+          <div class="contact-label">GitHub</div>
+          <div class="contact-val">github.com/yourusername</div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span>© 2025 Nguyễn Hoàng Khang · Made with ❤️ &amp; AI</span>
+    <a href="#top">↑ Lên đầu trang</a>
+  </footer>
+
+</main>
+
+<script>
+  const sections = document.querySelectorAll('section[id]');
+  const links = document.querySelectorAll('nav a');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + e.target.id));
+      }
+    });
+  }, { threshold: 0.4 });
+  sections.forEach(s => obs.observe(s));
+</script>
+</body>
+</html>
